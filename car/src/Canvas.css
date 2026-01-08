@@ -1,0 +1,16 @@
+.main{
+   display: flex;
+   flex-direction:row;
+  
+}
+.road{
+    background-color: brown;
+  height: 100vh;
+    width: 45vw;
+}
+
+.neural{
+    background-color: azure;
+    height: 100vh;
+    width:55vw;
+}
