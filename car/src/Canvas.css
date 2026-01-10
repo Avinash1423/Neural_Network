@@ -1,21 +1,26 @@
 .main{
    display: flex;
    flex-direction:row;
-  
+    overflow: hidden;
   
 }
-.road{
+.track{
     background-color: darkgray;
     height: 100vh;
     width: 45vw;
-    overflow: hidden;
-
-
+    display: flex;
+    justify-content:center;
 }
 
+.road{
+    background-color: lightgray;
+    height: 100vh;
+    width:50%;
+   
+}
 .neural{
     background-color:black;
     height: 100vh;
     width:55vw;
-     overflow: hidden;
+   
 }

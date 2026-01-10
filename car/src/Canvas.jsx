@@ -29,9 +29,12 @@ useEffect(()=>{
 },[])
 
 return(
+
     <div className='main'>
-<div className='road'>
+<div className='track'>
+    <div className='road'>
     <canvas ref={canvasRef}></canvas>
+    </div>
 </div>
 
 <div className='neural'>
