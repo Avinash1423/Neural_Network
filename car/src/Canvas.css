@@ -2,17 +2,20 @@
    display: flex;
    flex-direction:row;
   
+  
 }
 .road{
-    background-color: brown;
-  height: 100vh;
+    background-color: darkgray;
+    height: 100vh;
     width: 45vw;
+    overflow: hidden;
 
 
 }
 
 .neural{
-    background-color: azure;
+    background-color:black;
     height: 100vh;
     width:55vw;
+     overflow: hidden;
 }
