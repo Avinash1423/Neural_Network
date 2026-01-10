@@ -8,6 +8,10 @@ export default class Car{
         this.y=y;
         this.width=width;
         this.height=height;
+        this.speed=0;
+        this.accelaration=0.3
+        this.maxSpeed=3;
+   
 
         this.control=new Control();
     }
@@ -15,8 +19,15 @@ export default class Car{
 
     move(){
 
-        if(this.control.forward) this.y-=2;
-        if(this.control.reverse) this.y+=2;
+        if(this.control.forward) this.speed+=this.accelaration;
+        if(this.control.reverse) this.speed-=this.accelaration;
+
+        
+        if(this.speed>this.maxSpeed) this.speed=this.maxSpeed;
+        if(this.speed<-this.maxSpeed/2) this.speed= -this.maxSpeed/2;
+
+           this.y-=this.speed;
+
         if(this.control.left) this.x-=2;
         if(this.control.right) this.x+=2; 
     }
