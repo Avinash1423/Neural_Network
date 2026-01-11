@@ -6,7 +6,7 @@
 }
 .track{
     background-color: darkgray;
-    height: 100vh;
+    height:100vh;
     width: 45vw;
     display: flex;
     justify-content:center;
@@ -14,7 +14,7 @@
 
 .road{
     background-color: lightgray;
-    height: 100vh;
+    height:100%;
     width:50%;
    
 }
