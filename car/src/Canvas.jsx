@@ -6,8 +6,6 @@ const Canvas =()=>{
 
     const canvasRef=useRef(null);
     
-
-
 useEffect(()=>{
 
     const canvas=canvasRef.current;
@@ -19,14 +17,19 @@ useEffect(()=>{
     const  road=new Road(canvas.width/2,canvas.width,3);
     const car=new Car(road.getLaneCenter(1),100,35,50);
  
-
     function animate(){  
-    ctx.clearRect(0,0,canvas.width,canvas.height,);  
+    
+    ctx.clearRect(0,0,canvas.width,canvas.height);  
+
+    ctx.save();
+    ctx.translate(0,-car.y+canvas.height*0.7);// start drawing from this point so at every new frame
+                                               // its looks like the car is here
     road.draw(ctx);
     car.move();
     car.draw(ctx);
+    ctx.restore();
    
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animate);//this is async
     }
 
      animate();

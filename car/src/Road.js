@@ -13,6 +13,18 @@ export default class Road{
         this.bottom=1000000;
         this.utils=new Utils();
 
+        // record left and right most border in array
+
+        const topRight={x:this.right,y:this.top};
+        const topLeft={x:this.left,y:this.top};
+        const bottomRight={x:this.right,y:this.bottom};
+        const bottomLeft={x:this.left,y:this.bottom};
+
+        this.border=[
+         [topLeft,bottomLeft],
+         [topRight,bottomRight]
+        ]
+
      }
    
      draw(ctx){
@@ -21,21 +33,33 @@ export default class Road{
         ctx.linewidth=10;
         ctx.strokeStyle="white";
 
-        for(let i=0;i<=this.laneCount;i++){
+        // diplay inner dashed borders
+        for(let i=1;i<this.laneCount;i++){
 
-         const x=this.utils.lerp(this.left,this.right,i/this.laneCount);
+        const x=this.utils.lerp(this.left,this.right,i/this.laneCount);
 
-         if(i>0 &&i<this.laneCount) ctx.setLineDash([20,20]);
-         else
-         ctx.setLineDash([]);
+        ctx.setLineDash([20,20]);
+      
         ctx.beginPath();
         ctx.moveTo(x,this.top);
         ctx.lineTo(x,this.bottom);
         ctx.stroke();
-      //  ctx.restore();
-     
+    
         }
 
+       // diplay outer  most borders
+         ctx.setLineDash([]);
+       
+         this.border.forEach(border=>{
+          ctx.beginPath();
+          ctx.moveTo(border[0].x,border[0].y);
+          ctx.lineTo(border[1].x,border[1].y)
+          ctx.stroke();
+           
+         }
+       )
+
+        ctx.restore();
      }
 
      getLaneCenter(laneIndex){
