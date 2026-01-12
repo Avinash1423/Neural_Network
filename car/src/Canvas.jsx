@@ -2,6 +2,7 @@ import { useRef,useEffect } from 'react'
 import './Canvas.css'
 import Car from "./Car.js"
 import Road from "./Road.js"
+
 const Canvas =()=>{
 
     const canvasRef=useRef(null);
@@ -25,7 +26,7 @@ useEffect(()=>{
     ctx.translate(0,-car.y+canvas.height*0.7);// start drawing from this point so at every new frame
                                                // its looks like the car is here
     road.draw(ctx);
-    car.move();
+    car.update();
     car.draw(ctx);
     ctx.restore();
    

@@ -1,4 +1,5 @@
 import Control from "./Control";
+import  Sensors from './Sensors'
 
 export default class Car{
 
@@ -14,11 +15,16 @@ export default class Car{
         this.angle=0;
       
         this.control=new Control();
+        this.sensors=new Sensors(this)
     }
-
-
-    move(){
-
+      update(){
+    
+      this.#move();
+      this.sensors.showRays();
+    
+    }
+    #move(){
+       
         if(this.control.forward) this.speed+=this.accelaration;
         if(this.control.reverse) this.speed-=this.accelaration;
 
@@ -38,7 +44,6 @@ export default class Car{
 
     }
 
-
     draw(ctx){
       
         ctx.save();
@@ -54,8 +59,9 @@ export default class Car{
         ctx.fillStyle="blue"
         ctx.fill();
         ctx.restore();
-        
+               this.sensors.draw(ctx);
 
+        
     }
 
 }
