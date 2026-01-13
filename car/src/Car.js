@@ -20,7 +20,7 @@ export default class Car{
       update(){
     
       this.#move();
-      this.sensors.showRays();
+      this.sensors.showRays();//borders
     
     }
     #move(){

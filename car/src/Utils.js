@@ -7,4 +7,28 @@
 
          return left+(right-left)*p;
    }
+
+   getIntersection(A,B,C,D){
+
+      tTop=(C.x-A.x)*(D.y-C.y)-(C.y-A.y)*(D.x-C.x)
+      uTop=(C.x-A.x)*(B.y-A.y)-(C.y-A.y)*(B.x-A.x)
+      bottom=(B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x)
+
+    if(bottom!=0){
+
+      const t=tTop/ bottom;
+      const u=uTop/bottom;
+
+      if( t>=0  && t<=1 &&  u>=0 && u<=1){
+          return {
+                  x:this.lerp(A.x,B.x,t),
+                  y:this.lerp(A.y,B.y,t),
+                  offSet:t
+                  }
+              
+      }
+    }
+
+    return null;
+   }
 }
