@@ -26,7 +26,7 @@ useEffect(()=>{
     ctx.translate(0,-car.y+canvas.height*0.7);// start drawing from this point so at every new frame
                                                // its looks like the car is here
     road.draw(ctx);
-    car.update();
+    car.update(road.border);
     car.draw(ctx);
     ctx.restore();
    

@@ -17,10 +17,10 @@ export default class Car{
         this.control=new Control();
         this.sensors=new Sensors(this)
     }
-      update(){
+      update(border){
     
       this.#move();
-      this.sensors.showRays();//borders
+      this.sensors.update(border);//borders
     
     }
     #move(){

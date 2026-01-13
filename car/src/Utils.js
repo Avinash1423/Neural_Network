@@ -10,9 +10,9 @@
 
    getIntersection(A,B,C,D){
 
-      tTop=(C.x-A.x)*(D.y-C.y)-(C.y-A.y)*(D.x-C.x)
-      uTop=(C.x-A.x)*(B.y-A.y)-(C.y-A.y)*(B.x-A.x)
-      bottom=(B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x)
+     const tTop=(C.x-A.x)*(D.y-C.y)-(C.y-A.y)*(D.x-C.x)
+     const uTop=(C.x-A.x)*(B.y-A.y)-(C.y-A.y)*(B.x-A.x)
+     const bottom=(B.x-A.x)*(D.y-C.y)-(B.y-A.y)*(D.x-C.x)
 
     if(bottom!=0){
 
