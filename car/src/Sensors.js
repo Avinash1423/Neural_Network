@@ -28,8 +28,7 @@ export default class Sensors{
 
          }
 
-          console.log("READING"+this.readings);
-
+        
     }
 
 // all possible intesections for each ray
@@ -54,7 +53,7 @@ export default class Sensors{
           else{
             const offSetArray=touches.map(e=>e.offSet);
             const minOffSet=Math.min(...offSetArray);
-            console.log("MIN OFFSET "+minOffSet );
+           
             return touches.find(e=>e.offSet==minOffSet);
           }
 

@@ -18,16 +18,17 @@ export default class Car{
         this.control=new Control();
         this.sensors=new Sensors(this)
         this.points=[];
-        this.damaged=false;
+        this.damage=false;
         this.utils=new Utils();
 
     }
       update(border){
 
-      if(!this.damaged){
+      if(!this.damage){
        this.#move();
        this.polygon=this.#getCoridnates(); 
-       this.damage=this.#assesDamage(border);
+       this.damage = this.#assesDamage(border);
+       
         }
                  this.sensors.update(border);//borders
     }
@@ -37,6 +38,7 @@ export default class Car{
 
             if(this.utils.polyIntersect(this.polygon,border[i])) return true;
 
+         //  console.log(this.utils.polyIntersect(this.polygon,border[i]));
         }
 
         return false;
@@ -109,7 +111,7 @@ export default class Car{
 
     draw(ctx){
       
-        ctx.fillStyle= (!this.damaged) ? "blue" : "grey"
+    ctx.fillStyle= (!this.damage) ? "blue" : "grey"
        ctx.beginPath();
         ctx.moveTo(this.polygon[0].x,this.polygon[0].y);
         for(let i=1;i< this.polygon.length;i++){

@@ -41,8 +41,8 @@
                      const touch=this.getIntersection(
                         poly1[i],
                         poly1[(i+1)%poly1.length],
-                        poly1[j],
-                        poly1[(j+1)%poly2.length]
+                        poly2[j],
+                        poly2[(j+1)%poly2.length]
 
                                                 );
 
