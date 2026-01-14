@@ -13,7 +13,6 @@ export default class Sensors{
      this.utils=new Utils();
      this.readings=[];
 
-
     }
 
     update(borders){
@@ -26,7 +25,6 @@ export default class Sensors{
 this.readings.push(
             this.#getReadings(this.rays[i],borders)
                                                    );
-      
 
          }
 
@@ -69,7 +67,7 @@ this.readings.push(
       this.rays=[];
        for(let i=0;i<this.rayCount;i++){
 
-        const rayAngle=this.utils.lerp(this.raySpread/2,-this.raySpread/2,i/(this.rayCount-1))+this.car.angle;
+        const rayAngle=this.utils.lerp(this.raySpread/2,-this.raySpread/2,i/(this.rayCount-1))-this.car.angle;
         const start={x:this.car.x,y:this.car.y};
         const end={x:this.car.x+Math.sin(rayAngle)* this.rayLength,
                    y:this.car.y-Math.cos(rayAngle)*this.rayLength}

@@ -16,12 +16,59 @@ export default class Car{
       
         this.control=new Control();
         this.sensors=new Sensors(this)
+        this.points=[];
+
     }
       update(border){
+        this.#move();
+       this.polygon=this.#getCoridnates();
+      
+        this.sensors.update(border);//borders
+      
     
-      this.#move();
-      this.sensors.update(border);//borders
-    
+    }
+
+    #getCoridnates(){
+     this.points=[];
+     
+     const rad=(Math.hypot(this.width,this.height))/2;
+     const alpha=Math.atan2(this.width,this.height);
+
+     // Top Left
+     this.points.push(
+        {
+            x:this.x-Math.sin(this.angle-alpha)*rad,
+            y:this.y-Math.cos(this.angle-alpha)*rad
+        }
+            )
+
+     // Top Right
+     this.points.push(
+        {
+            x:this.x-Math.sin(this.angle+alpha)*rad,
+            y:this.y-Math.cos(this.angle+alpha)*rad
+        }
+                 )
+
+      // Bottom Right
+     this.points.push(
+        {
+            x:this.x-Math.sin(Math.PI+this.angle-alpha)*rad,
+            y:this.y-Math.cos(Math.PI+this.angle-alpha)*rad
+        }
+  
+                 )
+
+     // Bottom Left
+     this.points.push(
+        {
+            x:this.x-Math.sin(Math.PI+this.angle+alpha)*rad,
+            y:this.y-Math.cos(Math.PI+this.angle+alpha)*rad
+        }
+        
+              )
+     
+           return this.points;
     }
     #move(){
        
@@ -31,36 +78,46 @@ export default class Car{
         let flip=1;
         if(this.speed<0) flip=-1;
 
-         if(this.control.left) this.angle-=0.03*flip;
-         if(this.control.right) this.angle+=0.03*flip;
+         if(this.control.left) this.angle+=0.03*flip;
+         if(this.control.right) this.angle-=0.03*flip;
                                  
-    
+
         if(this.speed>this.maxSpeed) this.speed=this.maxSpeed;
         if(this.speed<-this.maxSpeed/2) this.speed= -this.maxSpeed/2;
 
          this.y-=Math.cos(this.angle)*this.speed;
-         this.x+=Math.sin(this.angle)*this.speed;
+         this.x-=Math.sin(this.angle)*this.speed;
              
-
     }
 
     draw(ctx){
       
-        ctx.save();
-        ctx.beginPath();
-        ctx.translate(this.x,this.y);
-        ctx.rotate(this.angle);
-        ctx.rect(
-             -this.width/2,
-             -this.height/2,
-              this.width,
-              this.height
-        );
+       ctx.beginPath();
+        ctx.moveTo(this.polygon[0].x,this.polygon[0].y);
+        for(let i=1;i< this.polygon.length;i++){
+
+            ctx.lineTo(this.polygon[i].x, this.polygon[i].y)
+        }
         ctx.fillStyle="blue"
         ctx.fill();
-        ctx.restore();
-               this.sensors.draw(ctx);
+        this.sensors.draw(ctx);
 
+        //  ctx.save();
+        // ctx.beginPath();
+        // ctx.translate(this.x,this.y);
+        // ctx.rotate(this.angle);
+        // ctx.rect(
+        //      -this.width/2,
+        //      -this.height/2,
+        //       this.width,
+        //       this.height
+        // );
+        // ctx.fillStyle="blue"
+        // ctx.fill();
+        // ctx.restore();
+        //        this.sensors.draw(ctx);
+
+            
         
     }
 
