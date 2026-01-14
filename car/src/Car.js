@@ -1,5 +1,6 @@
 import Control from "./Control";
 import  Sensors from './Sensors'
+import Utils from "./Utils"
 
 export default class Car{
 
@@ -17,15 +18,31 @@ export default class Car{
         this.control=new Control();
         this.sensors=new Sensors(this)
         this.points=[];
+        this.damaged=false;
+        this.utils=new Utils();
 
     }
       update(border){
-        this.#move();
-       this.polygon=this.#getCoridnates();
-      
-        this.sensors.update(border);//borders
-      
-    
+
+      if(!this.damaged){
+       this.#move();
+       this.polygon=this.#getCoridnates(); 
+       this.damage=this.#assesDamage(border);
+        }
+                 this.sensors.update(border);//borders
+    }
+    #assesDamage(border){
+
+        for(let i=0;i<border.length;i++){
+
+            if(this.utils.polyIntersect(this.polygon,border[i])) return true;
+
+        }
+
+        return false;
+
+
+
     }
 
     #getCoridnates(){
@@ -92,13 +109,15 @@ export default class Car{
 
     draw(ctx){
       
+        ctx.fillStyle= (!this.damaged) ? "blue" : "grey"
        ctx.beginPath();
         ctx.moveTo(this.polygon[0].x,this.polygon[0].y);
         for(let i=1;i< this.polygon.length;i++){
 
             ctx.lineTo(this.polygon[i].x, this.polygon[i].y)
         }
-        ctx.fillStyle="blue"
+
+       
         ctx.fill();
         this.sensors.draw(ctx);
 

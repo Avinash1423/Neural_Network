@@ -22,7 +22,7 @@ export default class Sensors{
          this.readings=[];// an array of intersection of min intersection for each ray.
          for(let i=0;i<this.rays.length;i++){
 
-this.readings.push(
+      this.readings.push(
             this.#getReadings(this.rays[i],borders)
                                                    );
 
@@ -80,7 +80,7 @@ this.readings.push(
 
         for(let i=0;i<this.rayCount;i++){
 
-            let end=this.rays[i][1];
+              let end=this.rays[i][1];
 
             if(this.readings[i])  end=this.readings[i];
             
