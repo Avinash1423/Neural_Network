@@ -4,33 +4,44 @@ import Utils from "./Utils"
 
 export default class Car{
 
-    constructor(x,y,width,height){
-
+    constructor(x,y,width,height,dummy){
+       
         this.x=x;
         this.y=y;
         this.width=width;
         this.height=height;
+        this.dummy=dummy;
         this.speed=0;
         this.accelaration=0.3;
-        this.maxSpeed=3;
+        this.maxSpeed= (!this.dummy) ? 5 : 3;
         this.angle=0;
-      
-        this.control=new Control();
-        this.sensors=new Sensors(this)
+    
         this.points=[];
         this.damage=false;
         this.utils=new Utils();
+       
+        this.control=new Control(this.dummy);
+        if(!this.dummy)  this.sensors=new Sensors(this);
 
     }
       update(border){
 
+    
       if(!this.damage){
-       this.#move();
-       this.polygon=this.#getCoridnates(); 
-       this.damage = this.#assesDamage(border);
-       
+         this.#move();
+         this.polygon=this.#getCoridnates(); // cordinates of the car for collision detection
+         this.damage = this.#assesDamage(border); //assess damage
+
+       if(!this.dummy){
+
+    
+        this.sensors.update(border);//borders
+
+       }
+
         }
-                 this.sensors.update(border);//borders
+
+        
     }
     #assesDamage(border){
 
@@ -42,8 +53,6 @@ export default class Car{
         }
 
         return false;
-
-
 
     }
 
@@ -90,6 +99,8 @@ export default class Car{
            return this.points;
     }
     #move(){
+
+       
        
         if(this.control.forward) this.speed+=this.accelaration;
         if(this.control.reverse) this.speed-=this.accelaration;
@@ -106,12 +117,20 @@ export default class Car{
 
          this.y-=Math.cos(this.angle)*this.speed;
          this.x-=Math.sin(this.angle)*this.speed;
+
+        
              
     }
 
     draw(ctx){
       
-    ctx.fillStyle= (!this.damage) ? "blue" : "grey"
+        if(!this.dummy){
+       ctx.fillStyle= (!this.damage) ? "blue" : "grey"
+        }
+        else{
+             ctx.fillStyle="red"
+        }
+        
        ctx.beginPath();
         ctx.moveTo(this.polygon[0].x,this.polygon[0].y);
         for(let i=1;i< this.polygon.length;i++){
@@ -121,8 +140,10 @@ export default class Car{
 
        
         ctx.fill();
-        this.sensors.draw(ctx);
 
+        if(!this.dummy){
+        this.sensors.draw(ctx);
+        }
         //  ctx.save();
         // ctx.beginPath();
         // ctx.translate(this.x,this.y);

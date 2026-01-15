@@ -1,13 +1,21 @@
 export default class Control{
 
-    constructor(){
+    constructor(dummy){
       
         this.forward=false;
         this.reverse=false;
         this.right=false;
         this.left=false;
+        this.dummy=dummy;
+
+    if(!this.dummy){
 
         this.#addKeyBoardListner();
+      }
+
+      else{
+         this.forward=true;
+      }
     }
 
 

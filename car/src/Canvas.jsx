@@ -4,7 +4,7 @@ import Car from "./Car.js"
 import Road from "./Road.js"
 
 const Canvas =()=>{
-
+    
     const canvasRef=useRef(null);
     
 useEffect(()=>{
@@ -16,7 +16,10 @@ useEffect(()=>{
 
     const ctx=canvas.getContext("2d");
     const  road=new Road(canvas.width/2,canvas.width,3);
-    const car=new Car(road.getLaneCenter(1),100,35,50);
+    const car=new Car(road.getLaneCenter(1),100,35,50,false);
+    const traffic=[
+        new Car(road.getLaneCenter(1),-100,35,50,true)
+    ];
  
     function animate(){  
     
@@ -27,6 +30,14 @@ useEffect(()=>{
                                                // its looks like the car is here
     road.draw(ctx);
     car.update(road.border);
+
+    for(let i=0;i<traffic.length;i++){
+      
+        traffic[i].update(road.border);
+        traffic[i].draw(ctx);
+
+    }
+
     car.draw(ctx);
     ctx.restore();
    
