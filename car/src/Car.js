@@ -13,43 +13,48 @@ export default class Car{
         this.dummy=dummy;
         this.speed=0;
         this.accelaration=0.3;
-        this.maxSpeed= (!this.dummy) ? 5 : 3;
+        this.maxSpeed= (!this.dummy) ?  8 : 4;
         this.angle=0;
     
         this.points=[];
         this.damage=false;
+        this.polygon=[];
         this.utils=new Utils();
        
         this.control=new Control(this.dummy);
         if(!this.dummy)  this.sensors=new Sensors(this);
 
     }
-      update(border){
+      update(border,traffic){
 
     
       if(!this.damage){
          this.#move();
          this.polygon=this.#getCoridnates(); // cordinates of the car for collision detection
-         this.damage = this.#assesDamage(border); //assess damage
-
+       
        if(!this.dummy){
 
-    
-        this.sensors.update(border);//borders
+         this.sensors.update(border,traffic);//borders
+         this.damage = this.#assesDamage(border,traffic); //assess damage
+
 
        }
 
         }
 
-        
     }
-    #assesDamage(border){
+    #assesDamage(border,traffic){
+
+        // assess damage for border
 
         for(let i=0;i<border.length;i++){
 
             if(this.utils.polyIntersect(this.polygon,border[i])) return true;
+        }
 
-         //  console.log(this.utils.polyIntersect(this.polygon,border[i]));
+         for(let i=0;i<traffic.length;i++){
+
+            if(this.utils.polyIntersect(this.polygon,traffic[i].points)) return true;
         }
 
         return false;
@@ -128,7 +133,7 @@ export default class Car{
        ctx.fillStyle= (!this.damage) ? "blue" : "grey"
         }
         else{
-             ctx.fillStyle="red"
+             ctx.fillStyle="yellow"
         }
         
        ctx.beginPath();

@@ -32,7 +32,7 @@
     return null;
    }
 
-      polyIntersect(poly1,poly2){ // car,road
+      polyIntersect(poly1,poly2){ // car,road   // car ,car
 
            for(let i=0;i<poly1.length;i++){
 

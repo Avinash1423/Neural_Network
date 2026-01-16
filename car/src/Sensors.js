@@ -15,7 +15,7 @@ export default class Sensors{
 
     }
 
-    update(borders){
+    update(borders,traffic){
 
         this.rays=[];
         this.#showRays();
@@ -23,18 +23,36 @@ export default class Sensors{
          for(let i=0;i<this.rays.length;i++){
 
       this.readings.push(
-            this.#getReadings(this.rays[i],borders)
+            this.#getReadings(this.rays[i],borders,traffic)
                                                    );
-
          }
 
         
     }
 
 // all possible intesections for each ray
-    #getReadings(rays,borders){
-
+    #getReadings(rays,borders,traffic){
+      
         let touches=[]; 
+        //
+
+         for(let i=0;i<traffic.length;i++){
+
+          for(let j=0;j<traffic[i].polygon.length;j++){
+
+        const intersection=this.utils.getIntersection(
+                rays[0], //start of ray
+                rays[1], // end of ray
+                traffic[i].polygon[j], // cordinate of car
+                traffic[i].polygon[(j+1)%traffic[i].polygon.length] //cordinate of car
+              );
+         
+         if(intersection!=null) touches.push(intersection);
+   
+          }
+        }
+
+//
 
           for(let i=0;i<borders.length;i++){
 
@@ -56,6 +74,9 @@ export default class Sensors{
            
             return touches.find(e=>e.offSet==minOffSet);
           }
+
+
+
 
     }
 
