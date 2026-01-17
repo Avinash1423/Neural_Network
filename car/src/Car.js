@@ -1,6 +1,7 @@
 import Control from "./Control";
 import  Sensors from './Sensors'
 import Utils from "./Utils"
+import NeuralNetwork from "./Level";
 
 export default class Car{
 
@@ -22,7 +23,10 @@ export default class Car{
         this.utils=new Utils();
        
         this.control=new Control(this.dummy);
-        if(!this.dummy)  this.sensors=new Sensors(this);
+        if(!this.dummy) {
+             this.sensors=new Sensors(this);
+             this.neural=new NeuralNetwork([this.sensors.rayCount,6,4]);
+                } 
 
     }
       update(border,traffic){
@@ -34,9 +38,12 @@ export default class Car{
        
        if(!this.dummy){
 
+        
          this.sensors.update(border,traffic);//borders
+         const offSets=this.sensors.readings.map( s=>s==null ? 0 : 1-s );
+         const neuralOutputs=NeuralNetwork.feedForward(offSets,this.neural);
+         console.log(neuralOutputs);
          this.damage = this.#assesDamage(border,traffic); //assess damage
-
 
        }
 
