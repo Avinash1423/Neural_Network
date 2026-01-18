@@ -44,7 +44,7 @@ export default class Car{
          //
          const offSets=this.sensors.readings.map( s=>s==null ? 0 : 1-s );
          const neuralOutputs=NeuralNetwork.feedForward(offSets,this.neural);
-         console.log(neuralOutputs);
+       //  console.log(neuralOutputs);
 
          if(this.useNeural){
              this.control.forward=neuralOutputs[0];

@@ -19,7 +19,7 @@ useEffect(()=>{
     const neuralCanvas=neuralCanvasRef.current;
     const neuralDiv=neuralCanvas.parentElement;
     neuralCanvas.height=neuralDiv.clientHeight;
-    neuralCanvas.width=neuralDiv.clientWidht;
+    neuralCanvas.width=neuralDiv.clientWidth;
 
     const ctx=canvas.getContext("2d");
     const neuralCtx=neuralCanvas.getContext("2d");
@@ -47,7 +47,7 @@ useEffect(()=>{
     }
 
     car.draw(ctx);
-     Visualizer.drawNetwork(neuralCtx,car.neural);
+    Visualizer.drawNetwork(neuralCtx,car.neural);
     ctx.restore();
    
     requestAnimationFrame(animate);//this is async
@@ -69,13 +69,12 @@ return(
 
 <div className='neural'>
 
-</div>
  <canvas ref={neuralCanvasRef}></canvas>
 
+</div>
 
 </div>
 );
-
 }
 
 export default Canvas
