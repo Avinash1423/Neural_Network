@@ -21,7 +21,7 @@ export default class Car{
         this.damage=false;
         this.polygon=[];
         this.utils=new Utils();
-        this.useNeural=true;
+        this.useNeural=false;
        
         this.control=new Control(this.dummy);
         if(!this.dummy) {

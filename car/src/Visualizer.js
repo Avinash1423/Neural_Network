@@ -11,7 +11,7 @@ export default class Visualizer{
         const height=ctx.canvas.height-(margin*2);
         this.utils=new Utils();
 
-        Visualizer.drawLevel(network.level[0],left,top,width,height,ctx);
+        Visualizer.drawLevel(network.level[1],left,top,width,height,ctx);
     }
 
     static drawLevel(level,left,top,width,height,ctx){
@@ -21,7 +21,7 @@ export default class Visualizer{
 
         const radius=18;
 
-         const{inputs,outputs}=level;
+         const{inputs,outputs,weights,biases}=level;
 
           // draw the connections for this level
 
@@ -30,20 +30,21 @@ export default class Visualizer{
                     const xFrom=this.utils.lerp(
                     left,
                     right,
-                    (level.inputs.length==1) ? 0.5 : i/inputs.length);
+                    (inputs.length==1) ? 0.5 : i/(inputs.length-1));
 
              for(let j=outputs.length-1;j>=0;j--){
                     
                         const xTo=this.utils.lerp(
                         left,
                         right,
-                        (level.outputs.length==1) ? 0.5 : j/outputs.length);
-                    
-                    ctx.strokeStyle="orange";
+                        (outputs.length==1) ? 0.5 : j/(outputs.length-1));
+                    ctx.beginPath();
+                    ctx.strokeStyle=this.utils.getRGBA(weights[i][j]);
                     ctx.lineWidth=2
                     ctx.moveTo(xFrom,bottom);
                     ctx.lineTo(xTo,top);
                     ctx.stroke();
+
 
                  }
                      }
@@ -55,12 +56,12 @@ export default class Visualizer{
            const x=this.utils.lerp(
             left,
             right,
-            (level.inputs.length==1) ? 0.5 : i/inputs.length
+            (inputs.length==1) ? 0.5 : i/(inputs.length-1)
 
           );
           ctx.beginPath();
-          ctx.arc(x,bottom,radius,0,Math.PI*2);
-          ctx.fillStyle="white";
+          ctx.arc(x,bottom,radius*0.6,0,Math.PI*2);
+          ctx.fillStyle=this.utils.getRGBA(inputs[i])
           ctx.fill();
           }
         
@@ -70,17 +71,34 @@ export default class Visualizer{
             const x=this.utils.lerp(
             left,
             right,
-            (level.outputs.length==1) ? 0.5 : i/outputs.length
+            (outputs.length==1) ? 0.5 : i/(outputs.length-1)
 
           );
+
           ctx.beginPath();
           ctx.arc(x,top,radius,0,Math.PI*2);
-          ctx.fillStyle="white";
+          ctx.fillStyle="black";
           ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(x,top,radius*0.6,0,Math.PI*2);
+          ctx.fillStyle=this.utils.getRGBA(outputs[i])
+          ctx.fill();
+
+           ctx.beginPath();
+           ctx.lineWidth =2;
+           ctx.arc(x,top,radius*0.8,0,Math.PI*2);
+           ctx.strokeStyle=this.utils.getRGBA(biases[i]);
+           ctx.setLineDash([4,4])
+           ctx.stroke();
+           ctx.setLineDash([]);
+
+
           }
 
-    
               }
+
+          
 
   
    }
