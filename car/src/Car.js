@@ -21,6 +21,7 @@ export default class Car{
         this.damage=false;
         this.polygon=[];
         this.utils=new Utils();
+        this.useNeural=true;
        
         this.control=new Control(this.dummy);
         if(!this.dummy) {
@@ -40,9 +41,20 @@ export default class Car{
 
         
          this.sensors.update(border,traffic);//borders
+         //
          const offSets=this.sensors.readings.map( s=>s==null ? 0 : 1-s );
          const neuralOutputs=NeuralNetwork.feedForward(offSets,this.neural);
          console.log(neuralOutputs);
+
+         if(this.useNeural){
+             this.control.forward=neuralOutputs[0];
+             this.control.left=neuralOutputs[1];
+             this.control.right=neuralOutputs[2];
+             this.control.reverse=neuralOutputs[3];
+
+
+         }
+         //
          this.damage = this.#assesDamage(border,traffic); //assess damage
 
        }
@@ -110,10 +122,9 @@ export default class Car{
      
            return this.points;
     }
+
     #move(){
 
-       
-       
         if(this.control.forward) this.speed+=this.accelaration;
         if(this.control.reverse) this.speed-=this.accelaration;
 
@@ -123,15 +134,12 @@ export default class Car{
          if(this.control.left) this.angle+=0.03*flip;
          if(this.control.right) this.angle-=0.03*flip;
                                  
-
         if(this.speed>this.maxSpeed) this.speed=this.maxSpeed;
         if(this.speed<-this.maxSpeed/2) this.speed= -this.maxSpeed/2;
 
          this.y-=Math.cos(this.angle)*this.speed;
          this.x-=Math.sin(this.angle)*this.speed;
-
-        
-             
+                 
     }
 
     draw(ctx){

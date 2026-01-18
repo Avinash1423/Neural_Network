@@ -2,10 +2,12 @@ import { useRef,useEffect } from 'react'
 import './Canvas.css'
 import Car from "./Car.js"
 import Road from "./Road.js"
+import Visualizer from './Visualizer.js'
 
 const Canvas =()=>{
     
     const canvasRef=useRef(null);
+    const  neuralCanvasRef=useRef(null);
     
 useEffect(()=>{
 
@@ -14,13 +16,19 @@ useEffect(()=>{
     canvas.height=roadDiv.clientHeight;
     canvas.width=roadDiv.clientWidth; 
 
+    const neuralCanvas=neuralCanvasRef.current;
+    const neuralDiv=neuralCanvas.parentElement;
+    neuralCanvas.height=neuralDiv.clientHeight;
+    neuralCanvas.width=neuralDiv.clientWidht;
+
     const ctx=canvas.getContext("2d");
+    const neuralCtx=neuralCanvas.getContext("2d");
     const  road=new Road(canvas.width/2,canvas.width,3);
     const car=new Car(road.getLaneCenter(1),100,35,50,false);
     const traffic=[
         new Car(road.getLaneCenter(1),-100,35,50,true)
     ];
- 
+   
     function animate(){  
     
     ctx.clearRect(0,0,canvas.width,canvas.height);  
@@ -39,6 +47,7 @@ useEffect(()=>{
     }
 
     car.draw(ctx);
+     Visualizer.drawNetwork(neuralCtx,car.neural);
     ctx.restore();
    
     requestAnimationFrame(animate);//this is async
@@ -53,14 +62,15 @@ return(
     <div className='main'>
 <div className='track'>
     <div className='road'>
-    <canvas ref={canvasRef}></canvas>
+  <canvas ref={canvasRef}></canvas>
+   
     </div>
 </div>
 
 <div className='neural'>
 
 </div>
-
+ <canvas ref={neuralCanvasRef}></canvas>
 
 
 </div>

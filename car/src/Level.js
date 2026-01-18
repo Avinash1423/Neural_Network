@@ -2,13 +2,13 @@
 
 export default class NeuralNetwork{
 
-    constructor(neuronCounts){ // 4 6 4
+    constructor(neuronCounts){ 
 
         this.level=[];
         for(let i=0;i<neuronCounts.length-1;i++){
 
             this.level.push(
-               new Level(neuronCounts[i],neuronCounts[i+1]) // 4 6
+               new Level(neuronCounts[i],neuronCounts[i+1]) 
             );
         
         }
@@ -38,11 +38,11 @@ class Level{
 
     constructor(inputCount,outputCount){
 
-        this.inputs=new Array(inputCount); //4
-        this.outputs=new Array(outputCount);  // 6
-        this.biases=new Array(outputCount)   // 4
+        this.inputs=new Array(inputCount); 
+        this.outputs=new Array(outputCount);  
+        this.biases=new Array(outputCount)  
 
-        this.weights=[];//an array of array (inputs*outputs) /24
+        this.weights=[];//an array of array (inputs*outputs) 
 
         //each input node has a weight for every output node
 
