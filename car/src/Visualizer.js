@@ -11,7 +11,16 @@ export default class Visualizer{
         const height=ctx.canvas.height-(margin*2);
         this.utils=new Utils();
 
-        Visualizer.drawLevel(network.level[1],left,top,width,height,ctx);
+        const levelHeight= height/network.level.length;
+
+          let levelTop=top;
+        
+        for(let i=network.level.length-1;i>=0;i--){
+
+         Visualizer.drawLevel(network.level[i],left,levelTop,width,levelHeight,ctx);
+         levelTop +=levelHeight;
+
+        }
     }
 
     static drawLevel(level,left,top,width,height,ctx){
