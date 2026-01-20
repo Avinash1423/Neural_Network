@@ -10,20 +10,22 @@ export default class Visualizer{
         const width=ctx.canvas.width-(margin*2);
         const height=ctx.canvas.height-(margin*2);
         this.utils=new Utils();
+        let symbols=["↑","←","→","↓"];
 
         const levelHeight= height/network.level.length;
 
           let levelTop=top;
         
         for(let i=network.level.length-1;i>=0;i--){
-
-         Visualizer.drawLevel(network.level[i],left,levelTop,width,levelHeight,ctx);
+         
+         if(!i==network.level.length-1) symbols=[];
+         Visualizer.drawLevel(network.level[i],left,levelTop,width,levelHeight,ctx,symbols);
          levelTop +=levelHeight;
 
         }
     }
 
-    static drawLevel(level,left,top,width,height,ctx){
+    static drawLevel(level,left,top,width,height,ctx,symbols){
                
            const right=left+width;
            const bottom=top+height;
@@ -69,8 +71,8 @@ export default class Visualizer{
 
           );
           ctx.beginPath();
+           ctx.fillStyle=this.utils.getRGBA(inputs[i]);
           ctx.arc(x,bottom,radius*0.6,0,Math.PI*2);
-          ctx.fillStyle=this.utils.getRGBA(inputs[i])
           ctx.fill();
           }
         
@@ -85,22 +87,33 @@ export default class Visualizer{
           );
 
           ctx.beginPath();
-          ctx.arc(x,top,radius,0,Math.PI*2);
           ctx.fillStyle="black";
+          ctx.arc(x,top,radius,0,Math.PI*2);
           ctx.fill();
 
           ctx.beginPath();
+            ctx.fillStyle=this.utils.getRGBA(outputs[i]);
           ctx.arc(x,top,radius*0.6,0,Math.PI*2);
-          ctx.fillStyle=this.utils.getRGBA(outputs[i])
-          ctx.fill();
 
-           ctx.beginPath();
-           ctx.lineWidth =2;
-           ctx.arc(x,top,radius*0.8,0,Math.PI*2);
-           ctx.strokeStyle=this.utils.getRGBA(biases[i]);
-           ctx.setLineDash([4,4])
-           ctx.stroke();
-           ctx.setLineDash([]);
+          ctx.fill();
+            if(symbols[i]){
+              ctx.beginPath();
+              ctx.textAlign="center";
+              ctx.textBaseline="Line";
+              ctx.strokeStyle="red"
+              ctx.strokeText(symbols[i],x,top);
+
+            // fillStyle and fillText
+
+           }
+
+            ctx.beginPath();
+            ctx.lineWidth =2;
+            ctx.strokeStyle=this.utils.getRGBA(biases[i]);
+            ctx.arc(x,top,radius*0.8,0,Math.PI*2);
+            ctx.setLineDash([4,4])
+            ctx.stroke();
+            ctx.setLineDash([]);
 
 
           }

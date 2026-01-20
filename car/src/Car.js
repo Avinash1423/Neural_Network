@@ -51,8 +51,6 @@ export default class Car{
              this.control.left=neuralOutputs[1];
              this.control.right=neuralOutputs[2];
              this.control.reverse=neuralOutputs[3];
-
-
          }
          //
          this.damage = this.#assesDamage(border,traffic); //assess damage
