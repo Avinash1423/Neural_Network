@@ -3,11 +3,14 @@ import './Canvas.css'
 import Car from "./Car.js"
 import Road from "./Road.js"
 import Visualizer from './Visualizer.js'
+import NeuralNetwork from './Level.js'
+
 
 const Canvas =()=>{
     
     const canvasRef=useRef(null);
     const  neuralCanvasRef=useRef(null);
+    
 
  let bestCar = null;
 
@@ -26,7 +29,7 @@ const Canvas =()=>{
         localStorage.removeItem("bestNeural");
        //  console.log("DELETED" + JSON.stringify(bestCar.neural));
         }
-      // else  console.log("NOTING TO DELETE");
+     else  console.log("NOTING TO DELETE");
     };
     
 
@@ -50,7 +53,7 @@ useEffect(()=>{
 // #1 car
  //   const car=new Car(road.getLaneCenter(1),100,35,50,false);
 
-   const N=1000;
+   const N=100;
    const multipleCars=generateCars(N);
    function generateCars(N){
        const carsFromGenerateCars=[];
@@ -67,15 +70,31 @@ useEffect(()=>{
       bestCar=multipleCars[0];
 
      if(localStorage.getItem("bestNeural")){
+             
+      for(let i=0;i<multipleCars.length;i++){
 
-      bestCar.neural=JSON.parse(localStorage.getItem("bestNeural"));
+            multipleCars[i].neural=JSON.parse(localStorage.getItem("bestNeural"));
+             if(i!=0){
+            NeuralNetwork.mutate(multipleCars[i].neural,0.2);
+         }
+
+      }
+        
+
+     
 
      }
 
      
 
     const traffic=[
-        new Car(road.getLaneCenter(1),-100,35,50,true)
+        new Car(road.getLaneCenter(0),-100,35,50,true),
+        new Car(road.getLaneCenter(2),-250,35,50,true),
+        new Car(road.getLaneCenter(0),-450,35,50,true),
+        new Car(road.getLaneCenter(1),-650,35,50,true),
+        new Car(road.getLaneCenter(0),-850,35,50,true),
+        new Car(road.getLaneCenter(2),-1050,35,50,true),
+       
     ];
 
     function animate(){ 

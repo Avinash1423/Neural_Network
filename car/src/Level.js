@@ -1,4 +1,4 @@
-
+import Utils from "./Utils";
 
 export default class NeuralNetwork{
 
@@ -12,7 +12,10 @@ export default class NeuralNetwork{
             );
         
         }
+
     }
+
+    
    
 
         static feedForward(givenInput,network){
@@ -26,6 +29,39 @@ export default class NeuralNetwork{
             }
 
             return outputs;
+        }
+
+        static mutate(network,amount=1){
+
+            
+            const utils=new Utils();
+
+            network.level.forEach(level => {
+
+                for(let i=0;i<level.biases.length;i++){
+
+                 level.biases[i]=utils.lerp(
+                               level.biases[i],
+                               Math.random()*2-1,
+                               amount )
+
+                } 
+                
+                 for(let i=0;i<level.weights.length;i++){
+                    for(let j=0;j<level.weights[i].length;j++){
+
+                    
+                      level.weights[i][j]=utils.lerp(
+                               level.weights[i][j],
+                               Math.random()*2-1,
+                               amount)
+                    }
+                    
+                }     
+            });
+
+
+
         }
 
     

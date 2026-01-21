@@ -14,7 +14,7 @@ export default class Car{
         this.dummy=dummy;
         this.speed=0;
         this.accelaration=0.3;
-        this.maxSpeed= (!this.dummy) ?  8 : 4;
+        this.maxSpeed= (!this.dummy) ?  10 : 8;
         this.angle=0;
     
         this.points=[];
