@@ -53,7 +53,7 @@ useEffect(()=>{
 // #1 car
  //   const car=new Car(road.getLaneCenter(1),100,35,50,false);
 
-   const N=100;
+   const N=1000;
    const multipleCars=generateCars(N);
    function generateCars(N){
        const carsFromGenerateCars=[];
@@ -75,7 +75,7 @@ useEffect(()=>{
 
             multipleCars[i].neural=JSON.parse(localStorage.getItem("bestNeural"));
              if(i!=0){
-            NeuralNetwork.mutate(multipleCars[i].neural,0.2);
+            NeuralNetwork.mutate(multipleCars[i].neural,0.4);
          }
 
       }

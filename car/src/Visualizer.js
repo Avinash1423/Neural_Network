@@ -18,7 +18,7 @@ export default class Visualizer{
         
         for(let i=network.level.length-1;i>=0;i--){
          
-         if(!i==network.level.length-1) symbols=[];
+         if(i !==network.level.length-1) symbols=[];
          Visualizer.drawLevel(network.level[i],left,levelTop,width,levelHeight,ctx,symbols);
          levelTop +=levelHeight;
 
@@ -30,7 +30,7 @@ export default class Visualizer{
            const right=left+width;
            const bottom=top+height;
 
-        const radius=18;
+        const radius=20;
 
          const{inputs,outputs,weights,biases}=level;
 
