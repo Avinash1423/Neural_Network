@@ -24,3 +24,30 @@
     width:55vw;
    
 }
+
+.save{
+
+    padding:3px;
+    margin:2px;
+    margin-left:20px;
+    margin-top: 25px;
+    border-radius:20px;
+    height:40px;
+    background-color: green;
+    color:black;
+    font-weight: 2px;
+
+}
+
+.unSave{
+     padding:3px;
+     margin:2px;
+     margin-left:20px;
+     margin-top: 25px;
+     border-radius:20px;
+     height:40px;
+     background-color: red;
+     color:black;
+    font-weight: 2px;
+
+}

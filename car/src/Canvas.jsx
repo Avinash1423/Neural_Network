@@ -8,7 +8,29 @@ const Canvas =()=>{
     
     const canvasRef=useRef(null);
     const  neuralCanvasRef=useRef(null);
+
+ let bestCar = null;
+
+    const save = () => {
+        if (!bestCar) return;
+        localStorage.setItem(
+            "bestNeural",
+            JSON.stringify(bestCar.neural)
+        );
+      //  console.log("SAVED "+JSON.stringify(bestCar.neural));
+    };
+
+    const unSave = () => {
+          if (!bestCar) return;
+        if(localStorage.getItem("bestNeural")){
+        localStorage.removeItem("bestNeural");
+       //  console.log("DELETED" + JSON.stringify(bestCar.neural));
+        }
+      // else  console.log("NOTING TO DELETE");
+    };
     
+
+  
 useEffect(()=>{
 
     const canvas=canvasRef.current;
@@ -42,15 +64,22 @@ useEffect(()=>{
            return carsFromGenerateCars;
     }
 
-     let bestCar=generateCars[0];
-    
+      bestCar=multipleCars[0];
+
+     if(localStorage.getItem("bestNeural")){
+
+      bestCar.neural=JSON.parse(localStorage.getItem("bestNeural"));
+
+     }
+
+     
 
     const traffic=[
         new Car(road.getLaneCenter(1),-100,35,50,true)
     ];
 
-   
     function animate(){ 
+
         
         //**fitness function that rewards the algorithm for being having the furtherest x value */
          bestCar=multipleCars.find( c=>c.y==Math.min(...multipleCars.map(c=>c.y)));
@@ -103,9 +132,15 @@ return(
 <div className='track'>
     <div className='road'>
   <canvas ref={canvasRef}></canvas>
-   
+    </div>
+
+    <div>
+        <button className="save" onClick={save}>Save </button>
+         <button className="unSave"  onClick={unSave}>Delete </button>
     </div>
 </div>
+
+ 
 
 <div className='neural'>
 
