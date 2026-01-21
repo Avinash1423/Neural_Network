@@ -21,7 +21,7 @@ export default class Car{
         this.damage=false;
         this.polygon=[];
         this.utils=new Utils();
-        this.useNeural=false;
+        this.useNeural=true;
        
         this.control=new Control(this.dummy);
         if(!this.dummy) {
@@ -140,7 +140,7 @@ export default class Car{
                  
     }
 
-    draw(ctx){
+    draw(ctx,sensorPermission=false){
       
         if(!this.dummy){
        ctx.fillStyle= (!this.damage) ? "blue" : "grey"
@@ -159,7 +159,7 @@ export default class Car{
        
         ctx.fill();
 
-        if(!this.dummy){
+        if(!this.dummy && sensorPermission==true){
         this.sensors.draw(ctx);
         }
         //  ctx.save();
