@@ -10,14 +10,8 @@ export default class NeuralNetwork{
             this.level.push(
                new Level(neuronCounts[i],neuronCounts[i+1]) 
             );
-        
         }
-
     }
-
-    
-   
-
         static feedForward(givenInput,network){
 
         let outputs=Level.feedForward(givenInput,network.level[0]);//returns an array of outputs

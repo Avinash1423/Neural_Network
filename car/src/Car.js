@@ -14,8 +14,9 @@ export default class Car{
         this.dummy=dummy;
         this.speed=0;
         this.accelaration=0.3;
-        this.maxSpeed= (!this.dummy) ?  10 : 8;
+        this.maxSpeed= (!this.dummy) ?  6 : 3;
         this.angle=0;
+        this.friction=0.05;
     
         this.points=[];
         this.damage=false;
@@ -42,7 +43,7 @@ export default class Car{
         
          this.sensors.update(border,traffic);//borders
          //
-         const offSets=this.sensors.readings.map( s=>s==null ? 0 : 1-s );
+         const offSets=this.sensors.readings.map( s=>s==null ? 0 : 1-s.offSet);
          const neuralOutputs=NeuralNetwork.feedForward(offSets,this.neural);
        //  console.log(neuralOutputs);
 
@@ -126,11 +127,17 @@ export default class Car{
         if(this.control.forward) this.speed+=this.accelaration;
         if(this.control.reverse) this.speed-=this.accelaration;
 
+        if(this.speed>0) this.speed -= this.friction;
+        if(this.speed<0) this.speed += this.friction;
+
         let flip=1;
         if(this.speed<0) flip=-1;
 
+        if(this.speed !=0){
+
          if(this.control.left) this.angle+=0.03*flip;
          if(this.control.right) this.angle-=0.03*flip;
+        }
                                  
         if(this.speed>this.maxSpeed) this.speed=this.maxSpeed;
         if(this.speed<-this.maxSpeed/2) this.speed= -this.maxSpeed/2;
@@ -138,6 +145,10 @@ export default class Car{
          this.y-=Math.cos(this.angle)*this.speed;
          this.x-=Math.sin(this.angle)*this.speed;
                  
+         if (Math.abs(this.speed) < this.friction) {
+           this.speed = 0;
+                 }
+
     }
 
     draw(ctx,sensorPermission=false){

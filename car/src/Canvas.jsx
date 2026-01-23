@@ -29,7 +29,7 @@ const Canvas =()=>{
         localStorage.removeItem("bestNeural");
        //  console.log("DELETED" + JSON.stringify(bestCar.neural));
         }
-     else  console.log("NOTING TO DELETE");
+     else  alert("NOTING TO DELETE");
     };
     
 
@@ -53,7 +53,7 @@ useEffect(()=>{
 // #1 car
  //   const car=new Car(road.getLaneCenter(1),100,35,50,false);
 
-   const N=1000;
+   const N=750;
    const multipleCars=generateCars(N);
    function generateCars(N){
        const carsFromGenerateCars=[];
@@ -73,28 +73,32 @@ useEffect(()=>{
              
       for(let i=0;i<multipleCars.length;i++){
 
-            multipleCars[i].neural=JSON.parse(localStorage.getItem("bestNeural"));
-             if(i!=0){
-            NeuralNetwork.mutate(multipleCars[i].neural,0.4);
-         }
+          const savedBrain = JSON.parse(localStorage.getItem("bestNeural"));
 
+         multipleCars[i].neural=JSON.parse(JSON.stringify(savedBrain));
+
+            if(i!=0){
+            NeuralNetwork.mutate(multipleCars[i].neural,0.1);
+         }
+           
+        
       }
         
-
-     
-
      }
 
      
-
     const traffic=[
-        new Car(road.getLaneCenter(0),-100,35,50,true),
-        new Car(road.getLaneCenter(2),-250,35,50,true),
-        new Car(road.getLaneCenter(0),-450,35,50,true),
-        new Car(road.getLaneCenter(1),-650,35,50,true),
-        new Car(road.getLaneCenter(0),-850,35,50,true),
-        new Car(road.getLaneCenter(2),-1050,35,50,true),
-       
+        new Car(road.getLaneCenter(1),-100,35,50,true),
+        new Car(road.getLaneCenter(0),-300,35,50,true),
+        new Car(road.getLaneCenter(2),-300,35,50,true),
+        new Car(road.getLaneCenter(0),-500,35,50,true),
+        new Car(road.getLaneCenter(1),-500,35,50,true),
+        new Car(road.getLaneCenter(1),-700,35,50,true),
+        new Car(road.getLaneCenter(2),-700,35,50,true),
+        new Car(road.getLaneCenter(0),-700,35,50,true),
+        new Car(road.getLaneCenter(2),-900,35,50,true),
+        new Car(road.getLaneCenter(1),-910,35,50,true),
+        new Car(road.getLaneCenter(0),-920,35,50,true)
     ];
 
     function animate(){ 
