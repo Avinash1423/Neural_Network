@@ -65,7 +65,7 @@ export default class Road{
      getLaneCenter(laneIndex){
 
       const laneWidth=this.width/this.laneCount;
-      return this.left+(laneIndex*laneWidth)+laneWidth/2;
+      return this.left+(laneIndex*(laneWidth*0.9))+laneWidth/2;
      }
 
 
