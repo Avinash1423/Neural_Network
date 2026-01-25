@@ -78,7 +78,7 @@ useEffect(()=>{
          multipleCars[i].neural=JSON.parse(JSON.stringify(savedBrain));
 
             if(i!=0){
-            NeuralNetwork.mutate(multipleCars[i].neural,0.1);
+            NeuralNetwork.mutate(multipleCars[i].neural,0.03);
          }
            
         
@@ -87,25 +87,31 @@ useEffect(()=>{
      }
 
      
-    const traffic=[
-        new Car(road.getLaneCenter(1),-100,35,50,true),
-        new Car(road.getLaneCenter(0),-300,35,50,true),
-        new Car(road.getLaneCenter(2),-300,35,50,true),
-        new Car(road.getLaneCenter(0),-500,35,50,true),
-        new Car(road.getLaneCenter(1),-500,35,50,true),
-        new Car(road.getLaneCenter(1),-700,35,50,true),
-        new Car(road.getLaneCenter(2),-700,35,50,true),
-        new Car(road.getLaneCenter(0),-700,35,50,true),
-        new Car(road.getLaneCenter(2),-900,35,50,true),
-        new Car(road.getLaneCenter(1),-910,35,50,true),
-        new Car(road.getLaneCenter(0),-920,35,50,true)
-    ];
+    let traffic=[];
+    let frameCount=0;
+
+    function createTraffic(){
+         
+         const laneCenter=Math.floor(Math.random()*3)
+         const y=bestCar.y+ -(100+ Math.random()*400);
+         traffic.push(new Car(road.getLaneCenter(laneCenter),y,35,50,true));
+          
+    }
 
     function animate(){ 
 
-        
+        frameCount += 1;
+
         //**fitness function that rewards the algorithm for being having the furtherest x value */
          bestCar=multipleCars.find( c=>c.y==Math.min(...multipleCars.map(c=>c.y)));
+         
+          if(frameCount % 60===0){
+          createTraffic();
+        }  
+
+     if(frameCount % 60===0){
+        traffic=traffic.filter(car=>car.y<bestCar.y+100);
+     }
         
     ctx.clearRect(0,0,canvas.width,canvas.height);  
 
