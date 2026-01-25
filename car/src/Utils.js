@@ -25,7 +25,6 @@
                   y:this.lerp(A.y,B.y,t),
                   offSet:t
                   }
-              
       }
     }
 
